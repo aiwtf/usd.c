@@ -14,10 +14,11 @@ export default function BuyPage() {
 
             {/* Widget Container */}
             <div className="w-full max-w-4xl mx-auto flex flex-col items-center">
-                <div className="h-[650px] w-full md:w-[480px] rounded-xl shadow-2xl border border-slate-700 overflow-hidden bg-slate-900">
+                {/* Updated Height to h-[360px] as requested */}
+                <div className="h-[360px] w-full md:w-[480px] rounded-xl shadow-2xl border border-slate-700 overflow-hidden bg-slate-900">
                     <iframe
-                        src="https://widget.onramper.com?color=3b82f6&theme=dark&defaultAmount=100&defaultFiat=USD&defaultCrypto=USDC_ETH"
-                        title="Onramper Widget"
+                        src="https://changenow.io/embeds/exchange-widget/v2/widget.html?FAQ=true&amount=100&amountFiat=100&backgroundColor=1e293b&darkMode=true&from=usd&fromFiat=usd&horizontal=false&isFiat=true&lang=en-US&link_id=usdc_c_buy&locales=true&logo=false&primaryColor=3b82f6&to=usdc&toFiat=usdc&toTheMoon=true"
+                        title="ChangeNOW Buy Widget"
                         className="h-full w-full border-none overflow-hidden"
                         allow="accelerometer; autoplay; camera; gyroscope; payment"
                     ></iframe>

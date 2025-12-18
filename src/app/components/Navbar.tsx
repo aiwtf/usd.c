@@ -16,6 +16,7 @@ export default function Navbar() {
     const navLinks = [
         { name: 'Dashboard', href: '/' },
         { name: 'Swap', href: '/swap' },
+        { name: 'Gold & RWA', href: '/resources' },
         { name: 'Buy Crypto', href: '/buy' },
     ];
 
