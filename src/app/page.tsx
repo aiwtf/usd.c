@@ -12,9 +12,12 @@ export default async function Home({
 
   // Extract params safely
   const inputToken = typeof params.inputToken === 'string' ? params.inputToken : undefined;
-  const amount = typeof params.amount === 'string' ? params.amount : undefined;
-  // const outputToken = typeof params.outputToken === 'string' ? params.outputToken : undefined; 
-  // We strictly default output to USDC in the component, but can pass if needed.
+  const sellAmount = typeof params.amount === 'string' ? params.amount : undefined;
+
+  // Invoice Mode Params
+  const recipient = (typeof params.to === 'string' ? params.to : undefined) ||
+    (typeof params.recipient === 'string' ? params.recipient : undefined);
+  const buyAmount = typeof params.buyAmount === 'string' ? params.buyAmount : undefined;
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
@@ -29,7 +32,9 @@ export default async function Home({
 
       <AgentTerminal
         initialInputToken={inputToken}
-        initialAmount={amount}
+        initialSellAmount={sellAmount}
+        initialRecipient={recipient}
+        initialBuyAmount={buyAmount}
       />
     </div>
   );

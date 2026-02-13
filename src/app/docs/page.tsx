@@ -112,7 +112,29 @@ trigger_swap()`}</pre>
                         <li>
                             <span className="text-gray-500">USDC (Mainnet):</span> <span className="text-gray-300">0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48</span>
                         </li>
+
                     </ul>
+                </section>
+
+                {/* Section 5: Invoice Protocol */}
+                <section>
+                    <h2 className="text-white font-bold mb-2 uppercase">5. Protocol: Invoice_Links</h2>
+                    <p className="text-sm mb-4">
+                        Agents can generate cross-currency payment links. The payer can use ANY token,
+                        but the settlement is guaranteed in USDC to the specified address.
+                    </p>
+                    <div className="bg-gray-900 border border-gray-800 rounded p-4 overflow-x-auto text-xs">
+                        <pre>{`def create_invoice(my_address, usdc_amount):
+    """
+    Returns a payment link. The payer can use ANY token.
+    You receive exactly 'usdc_amount' in USDC.
+    """
+    base = "https://usd.c/"
+    return f"{base}?to={my_address}&buyAmount={usdc_amount}&output=USDC"
+
+# Usage:
+# send_to_client(create_invoice("0xYourWallet...", "100.00"))`}</pre>
+                    </div>
                 </section>
 
                 {/* Footer */}
@@ -121,6 +143,6 @@ trigger_swap()`}</pre>
                 </div>
 
             </div>
-        </main>
+        </main >
     );
 }
