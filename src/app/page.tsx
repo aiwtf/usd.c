@@ -1,9 +1,8 @@
 /* eslint-disable */
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import AgentTerminal from '../components/AgentTerminal';
-import InvoiceGenerator from '../components/InvoiceGenerator';
 
 interface HomeProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
@@ -57,20 +56,6 @@ export default function Home({ searchParams }: HomeProps) {
   // Default to SWAP.
 
   return (
-    <ViewManager
-      inputToken={inputToken}
-      sellAmount={sellAmount}
-      recipient={recipient}
-      buyAmount={buyAmount}
-    />
-  );
-}
-
-// Internal Client Component to handle State
-function ViewManager({ inputToken, sellAmount, recipient, buyAmount }: any) {
-  const [mode, setMode] = useState<'SWAP' | 'RECEIVE'>('SWAP');
-
-  return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
       <div className="mb-8 text-center">
         <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500 tracking-tighter">
@@ -81,38 +66,12 @@ function ViewManager({ inputToken, sellAmount, recipient, buyAmount }: any) {
         </p>
       </div>
 
-      {/* Tab Switcher */}
-      <div className="flex space-x-8 mb-8 text-xs font-mono tracking-widest">
-        <button
-          onClick={() => setMode('SWAP')}
-          className={`pb-1 border-b-2 transition-all ${mode === 'SWAP'
-              ? 'text-white border-green-500'
-              : 'text-gray-600 border-transparent hover:text-gray-400'
-            }`}
-        >
-          [ SWAP_MODE ]
-        </button>
-        <button
-          onClick={() => setMode('RECEIVE')}
-          className={`pb-1 border-b-2 transition-all ${mode === 'RECEIVE'
-              ? 'text-white border-green-500'
-              : 'text-gray-600 border-transparent hover:text-gray-400'
-            }`}
-        >
-          [ RECEIVE_MODE ]
-        </button>
-      </div>
-
-      {mode === 'SWAP' ? (
-        <AgentTerminal
-          initialInputToken={inputToken}
-          initialSellAmount={sellAmount}
-          initialRecipient={recipient}
-          initialBuyAmount={buyAmount}
-        />
-      ) : (
-        <InvoiceGenerator />
-      )}
+      <AgentTerminal
+        initialInputToken={inputToken}
+        initialSellAmount={sellAmount}
+        initialRecipient={recipient}
+        initialBuyAmount={buyAmount}
+      />
     </div>
   );
 }
