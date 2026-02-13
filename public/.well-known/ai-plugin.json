@@ -1,0 +1,17 @@
+{
+    "schema_version": "v1",
+    "name_for_human": "usd.c Protocol",
+    "name_for_model": "USDC_Settlement_Agent",
+    "description_for_human": "The easiest way for AI Agents to swap tokens into USDC.",
+    "description_for_model": "This tool allows AI agents to construct a swap transaction URL. It uses CowSwap for execution. The agent should provide the input token and amount. The output is always USDC.",
+    "auth": {
+        "type": "none"
+    },
+    "api": {
+        "type": "openapi",
+        "url": "https://usd.c/openapi.yaml"
+    },
+    "logo_url": "https://usd.c/logo.png",
+    "contact_email": "agent@usd.c",
+    "legal_info_url": "https://usd.c/legal"
+}

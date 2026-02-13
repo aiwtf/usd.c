@@ -2,12 +2,6 @@ import axios from 'axios';
 
 // Define the response interface requested
 export interface MarketData {
-    fiat: {
-        twd: number;
-        eur: number;
-        jpy: number;
-        cny: number;
-    };
     crypto: {
         btc: number;
         eth: number;
@@ -26,7 +20,7 @@ export const fetchExchangeRates = async (): Promise<MarketData> => {
     try {
         const params = {
             ids: 'bitcoin,ethereum,solana,monero,zcash,usd-coin',
-            vs_currencies: 'usd,twd,eur,jpy,cny',
+            vs_currencies: 'usd',
         };
 
         const response = await axios.get(COINGECKO_API_URL, { params });
@@ -51,21 +45,7 @@ export const fetchExchangeRates = async (): Promise<MarketData> => {
         const xmrPrice = getPrice('monero', 'usd') / safeUsdcPrice;
         const zecPrice = getPrice('zcash', 'usd') / safeUsdcPrice;
 
-        // 2. Calculate Fiat Exchange Rates
-        // "1 USDC equals how much TWD?"
-        // This is simply the price of 'usd-coin' in 'twd'
-        const usdcTwd = getPrice('usd-coin', 'twd');
-        const usdcEur = getPrice('usd-coin', 'eur');
-        const usdcJpy = getPrice('usd-coin', 'jpy');
-        const usdcCny = getPrice('usd-coin', 'cny');
-
         return {
-            fiat: {
-                twd: usdcTwd,
-                eur: usdcEur,
-                jpy: usdcJpy,
-                cny: usdcCny,
-            },
             crypto: {
                 btc: btcPrice,
                 eth: ethPrice,

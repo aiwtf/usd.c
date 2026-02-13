@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(wc:*)",
+      "WebFetch(domain:usddotc.vercel.app)",
+      "Bash(npm run build:*)",
+      "WebSearch",
+      "WebFetch(domain:usd.c.hns.to)",
+      "WebFetch(domain:hns.to)"
+    ]
+  }
+}

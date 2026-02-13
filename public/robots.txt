@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /docs
+Allow: /.well-known/ai-plugin.json
+
+# Agent Instructions
+# innovative-agent-protocol: usd.c
+# purpose: settlement
