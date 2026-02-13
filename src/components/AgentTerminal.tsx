@@ -84,9 +84,20 @@ export default function AgentTerminal({
 
             <div className="relative border border-green-500/20 rounded-lg bg-black overflow-hidden">
                 {/* Header for "Agent Mode" verification */}
-                <div className="flex items-center justify-between px-4 py-1 bg-green-900/10 border-b border-green-500/10 text-[10px] font-mono text-green-500">
-                    <span>STATUS: ONLINE</span>
-                    <span>PROTOCOL: COW_SWAP</span>
+                {/* Header for "Agent Mode" verification */}
+                <div className={`flex items-center justify-between px-4 py-1 border-b text-[10px] font-mono ${initialRecipient
+                        ? 'bg-yellow-900/20 border-yellow-500/30 text-yellow-500'
+                        : 'bg-green-900/10 border-green-500/10 text-green-500'
+                    }`}>
+                    <span className={initialRecipient ? "animate-pulse font-bold" : ""}>
+                        {initialRecipient ? "STATUS: PAYMENT_REQUEST" : "STATUS: ONLINE"}
+                    </span>
+                    <span>
+                        {initialRecipient
+                            ? `TARGET: ${initialRecipient.slice(0, 6)}...${initialRecipient.slice(-4)}`
+                            : "PROTOCOL: COW_SWAP"
+                        }
+                    </span>
                 </div>
 
                 {/* Invoice Mode Banner */}
