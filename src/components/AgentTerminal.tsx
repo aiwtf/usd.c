@@ -96,6 +96,22 @@ export default function AgentTerminal({
         }
     }, [isPaymentMode]);
 
+    // Format Buy Amount for USDC (6 Decimals)
+    let formattedBuyAmount = '0';
+    if (isPaymentMode && initialBuyAmount) {
+        try {
+            const amountNum = parseFloat(initialBuyAmount);
+            if (!isNaN(amountNum)) {
+                // USDC has 6 decimals. 
+                // "100" -> 100 * 10^6 = 100000000
+                // Use Math.floor to avoid floating point issues like 100.0000001
+                formattedBuyAmount = Math.floor(amountNum * 1000000).toString();
+            }
+        } catch (e) {
+            console.error("Error parsing amount", e);
+        }
+    }
+
     const params = {
         appCode: 'usd.c-agent',
         width: '100%',
@@ -104,12 +120,12 @@ export default function AgentTerminal({
         tokenList: 'https://files.cow.fi/tokens/CoinGecko.json',
         tradeType: TradeType.SWAP,
         sell: {
-            asset: resolveToken(initialInputToken) || NATIVE_ETH,
+            asset: isPaymentMode ? undefined : (resolveToken(initialInputToken) || NATIVE_ETH),
             amount: isPaymentMode ? undefined : initialSellAmount,
         },
         buy: {
             asset: resolveToken(initialOutputToken) || USDC_ADDRESS, // Default USDC
-            amount: initialBuyAmount || '0',
+            amount: isPaymentMode ? formattedBuyAmount : '0',
         },
         enabledTradeTypes: [TradeType.SWAP, TradeType.LIMIT],
         theme: {
@@ -136,8 +152,8 @@ export default function AgentTerminal({
                         <button
                             onClick={() => setMode('SWAP')}
                             className={`flex-1 py-2 text-xs transition-colors duration-300 ${mode === 'SWAP'
-                                    ? 'bg-green-500/10 text-green-400 font-bold'
-                                    : 'text-gray-600 hover:text-green-500/50 hover:bg-green-900/5'
+                                ? 'bg-green-500/10 text-green-400 font-bold'
+                                : 'text-gray-600 hover:text-green-500/50 hover:bg-green-900/5'
                                 }`}
                         >
                             {'> EXECUTE_SWAP'}
@@ -145,8 +161,8 @@ export default function AgentTerminal({
                         <button
                             onClick={() => setMode('RECEIVE')}
                             className={`flex-1 py-2 text-xs transition-colors duration-300 ${mode === 'RECEIVE'
-                                    ? 'bg-blue-500/10 text-blue-400 font-bold'
-                                    : 'text-gray-600 hover:text-blue-500/50 hover:bg-blue-900/5'
+                                ? 'bg-blue-500/10 text-blue-400 font-bold'
+                                : 'text-gray-600 hover:text-blue-500/50 hover:bg-blue-900/5'
                                 }`}
                         >
                             {'> GENERATE_INVOICE'}
@@ -156,10 +172,10 @@ export default function AgentTerminal({
 
                 {/* Header for "Agent Mode" verification */}
                 <div className={`flex items-center justify-between px-4 py-1 border-b text-[10px] ${initialRecipient
-                        ? 'bg-yellow-900/20 border-yellow-500/30 text-yellow-500'
-                        : mode === 'SWAP'
-                            ? 'bg-green-900/10 border-green-500/10 text-green-500'
-                            : 'bg-blue-900/10 border-blue-500/10 text-blue-500'
+                    ? 'bg-yellow-900/20 border-yellow-500/30 text-yellow-500'
+                    : mode === 'SWAP'
+                        ? 'bg-green-900/10 border-green-500/10 text-green-500'
+                        : 'bg-blue-900/10 border-blue-500/10 text-blue-500'
                     }`}>
                     <span className={initialRecipient ? "animate-pulse font-bold" : ""}>
                         {initialRecipient
@@ -250,8 +266,8 @@ export default function AgentTerminal({
                                     onClick={handleCopy}
                                     disabled={!invoiceRecipient}
                                     className={`flex-1 py-2 rounded text-xs font-bold tracking-wider uppercase transition-all duration-300 ${copied
-                                            ? 'bg-blue-500 text-black shadow-[0_0_15px_rgba(59,130,246,0.5)]'
-                                            : 'bg-blue-900/20 text-blue-500 border border-blue-500/30 hover:bg-blue-500/10 hover:border-blue-500'
+                                        ? 'bg-blue-500 text-black shadow-[0_0_15px_rgba(59,130,246,0.5)]'
+                                        : 'bg-blue-900/20 text-blue-500 border border-blue-500/30 hover:bg-blue-500/10 hover:border-blue-500'
                                         }`}
                                 >
                                     {copied ? 'COPIED!' : 'COPY LINK'}
